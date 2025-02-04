@@ -1,0 +1,51 @@
+﻿
+<div class="container">
+    <div class="form-container">
+
+        @if (ViewBag.Message != null)
+        {
+            <div class="alert alert-info">
+                <p style="color:red; padding:10px;">@ViewBag.Message</p>
+            </div>
+        }
+
+
+
+        <h1>Login</h1>
+        <form id="login-form" method="post" action="Login/Login">
+            <div class="input-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <div class="button-container">
+                <button type="submit" class="submit-btn">Login</button>
+            </div>
+            <div class="register-link">
+                <p>Don't have an account? <a href="@Url.Action("Index", "login")">Register here</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<script>
+    // Optional JS validation (add more as needed)
+    document.getElementById('login-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        if (username === '' || password === '') {
+            alert('Please fill in all fields!');
+        } else {
+            // Proceed to submit the form
+            this.submit();
+        }
+    });
+</script>
