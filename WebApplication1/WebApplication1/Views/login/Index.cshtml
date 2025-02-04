@@ -1,28 +1,33 @@
-﻿@model WebApplication1.Models.AppUsers
-
-<div class="container">
+﻿<div class="container">
     <div class="card">
-        <h2>Create an Account</h2>
-
-        @using (Html.BeginForm("Create", "login", FormMethod.Post))
+        @if (ViewBag.Message != null)
         {
-            <label>Full Name</label>
-            @Html.TextBoxFor(m => m.name, new { @class = "form-control", required = "required" })
-
-            <label>Username</label>
-            @Html.TextBoxFor(m => m.username, new { @class = "form-control", required = "required" })
-
-            <label>Email</label>
-            @Html.TextBoxFor(m => m.email, new { @class = "form-control", required = "required" })
-
-            <label>Password</label>
-            @Html.PasswordFor(m => m.password, new { @class = "form-control", required = "required" })
-
-            <br />
-            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <div class="alert alert-info">
+                <p style="color:red; padding:10px;">@ViewBag.Message</p>
+            </div>
         }
 
-        <p>@ViewBag.Message</p>
-        <p>Already have an account? <a href="/login">Log in</a></p>
+        <h2>Create an Account</h2>
+
+        <form method="post" id="signUpForm">
+            <input type="text" name="Name" placeholder="Full Name" required>
+            <input type="email" name="Username" placeholder="Email" required>
+            <input type="password" name="Password" placeholder="Password" required id="password">
+            <input type="password" name="ConfirmPassword" placeholder="Confirm Password" required id="confirmPassword">
+            <button type="submit">Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="@Url.Action("login", "login")">Log in</a></p>
     </div>
 </div>
+
+<script>
+    document.getElementById('signUpForm').onsubmit = function(event) {
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            event.preventDefault(); // Stop form submission
+        }
+    };
+</script>
